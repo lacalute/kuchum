@@ -5,8 +5,8 @@ token = Token()
 @app.post('/login', tags=['security'])
 def login(login: Login, req: Request, Authorize: AuthJWT = Depends()):
   if token.get_access_token(req) == None and token.get_refresh_token(req) == None:
-    user_payload = usrs.find_one({'nick': login.nick, 'password': login.password})
-    if user_payload:
+    user_payload = usrs.find_one({'nick': login.nick})
+    if check_hashing(login.password, user_payload['password']):
       Authorize.set_access_cookies(token.create_access_token(str(user_payload['_id'])))
       Authorize.set_refresh_cookies(token.create_refresh_token())
       return {"msg":"Successfully login"}
@@ -27,9 +27,9 @@ def protected(request: Request, Authorize: AuthJWT = Depends()):
 @app.post('/registration', tags=['security'])
 def register(req:Request, user: Registration, Authorize: AuthJWT = Depends()):
   if token.get_access_token(req) == None and token.get_refresh_token(req) == None:
-    crud_user = CrudUser(user.fname, user.lname, user.nick, user.email, user.password)
+    crud_user = CrudUser(user.fname, user.lname, user.nick, user.email, hashing(user.password))
     user_payload = crud_user.create()
-    Authorize.set_access_cookies(token.create_access_token(user_payload['_id']))
+    Authorize.set_access_cookies(token.create_access_token(str(user_payload['_id'])))
     Authorize.set_refresh_cookies(token.create_refresh_token())
     return {"msg":"Successfully login"}
   return {'msg': 'You are logged in now'}

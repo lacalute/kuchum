@@ -7,9 +7,8 @@ from pydantic import BaseModel
 from connection import *
 from fastapi.middleware.cors import CORSMiddleware
 import jwt
-from http import cookies
-morsel = cookies.Morsel()
 import time
+from hashing import *
 
 # init the main FastAPI class
 app = FastAPI()
@@ -33,7 +32,7 @@ ALGORITHM = 'HS256'
 # CRUD users
 class CrudUser:
   def __init__(self, fname, lname, nick, email, password):
-    user = {
+    self.user = {
         'fname': fname,
         'lname': lname, 
         'nick': nick,
