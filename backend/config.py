@@ -9,13 +9,13 @@ from fastapi.middleware.cors import CORSMiddleware
 import jwt
 import time
 from hashing import *
-
+from datetime import datetime
+from bson.objectid import ObjectId
 # init the main FastAPI class
 app = FastAPI()
 
-
+# cors policy
 origins = ["*"]
-
 app.add_middleware(
   CORSMiddleware,
   allow_origins=origins,
@@ -24,6 +24,7 @@ app.add_middleware(
   allow_headers=["*"],
 )
 
+# JWT config
 ACCESS_TOKEN_EXPIRE_DELTA = 900.0
 REFRESH_TOKEN_EXPIRE_DELTA = 2592000.0
 SECRET_KEY = 'secret'
@@ -31,8 +32,9 @@ ALGORITHM = 'HS256'
 
 # CRUD users
 class CrudUser:
-  def __init__(self, fname, lname, nick, email, password):
-    self.user = {
+   
+  def create_user(self, fname, lname, nick, email, password):
+    user = {
         'fname': fname,
         'lname': lname, 
         'nick': nick,
@@ -41,28 +43,47 @@ class CrudUser:
         'posts': [],
         'followers': [],
         'subscribers': []
-      }  
-  def create(self):
-    usrs.insert_one(self.user)
-    return self.user
+    }  
+    usrs.insert_one(user)
+    return user
 
-  def delete(self, email):
-    usrs.delete_one(self.user)
-
-  def update(self):
-    pass
-
+  def delete_user(self, user_id):
+    try:
+      usrs.delete_one({'_id': ObjectId(user_id)})
+      return True
+    except:
+      return False
+crud_user = CrudUser()
+  
 # CRUD posts
 class CrudPosts:
-  def __init__(self, title, content):
+
+  
+  def create_post(self, title, content):
     post = {
+      'date': str(datetime.now()).split(' ')[0],
       'title': title,
       'content': content
     }
-  
-  def create(self):
-    pass
-
+    try:
+      posts.insert_one(post)
+      return True
+    except Exception as _ex:
+      print(_ex) 
+      return False
+    
+  def delete_post(self, post_id):
+    try:
+      posts.delete_one({'_id': ObjectId(post_id)})
+      return True
+    except:
+      return False
+  # def get_all_posts(self):
+  #   all_posts = []
+  #   for post in posts.find():
+  #     all_posts.append(post)
+  #   return all_posts
+crud_post = CrudPosts()
 
 class Token():
   # return tokens in cookies
@@ -123,6 +144,7 @@ class Token():
   # return the decoded token
   def decodeToken(self, token):
     return jwt.decode(token, SECRET_KEY, ALGORITHM)
+token = Token()
 
 
 # Scheme for registration
@@ -138,6 +160,10 @@ class Login(BaseModel):
   nick: str
   password: str
 
+# Scheme for post
+class Post(BaseModel):
+  title: str
+  content: str
 
 
 # AuthJWT class settings
