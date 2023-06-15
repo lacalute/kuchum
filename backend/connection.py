@@ -6,3 +6,4 @@ db = client['sample_mflix']
 usrs = db['usrs']
 posts = db['psts']
 
+
