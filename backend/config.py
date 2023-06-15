@@ -53,20 +53,33 @@ class CrudUser:
       return True
     except:
       return False
+    
+
+  def update_user(self, id, value: dict):
+    try:
+      usrs.update_one({'_id': ObjectId(id)}, {"$set": value}, upsert=False)
+      return True
+    except:
+      return False
 crud_user = CrudUser()
   
 # CRUD posts
 class CrudPosts:
 
   
-  def create_post(self, title, content):
+  def create_post(self, id: str, title, content):
     post = {
+      "author_id": id,
       'date': str(datetime.now()).split(' ')[0],
       'title': title,
       'content': content
     }
     try:
       posts.insert_one(post)
+      author = usrs.find_one({'_id': ObjectId(id)})
+      author_posts = author['posts']
+      author_posts.append(str(post['_id']))
+      crud_user.update_user(id, {'posts': author_posts})
       return True
     except Exception as _ex:
       print(_ex) 

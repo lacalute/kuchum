@@ -1,6 +1,5 @@
 from config import *
 
-
 @app.post('/login', tags=['security'])
 def login(login: Login, req: Request, Authorize: AuthJWT = Depends()):
   if token.get_access_token(req) == None and token.get_refresh_token(req) == None:
