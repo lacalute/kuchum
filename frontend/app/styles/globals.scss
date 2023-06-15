@@ -1,0 +1,135 @@
+:root {
+  --color: rgba(35, 35, 35, 0.87);
+  --bg: #fff;
+  --bg-main: #F7F5FE;
+
+  --btn-bg: #ffffff;
+  --btn-bg-hover: #f5dddd;
+
+  --btn-bg-add: #e1a3a3;
+  --btn-bg-add-hover: #e1a3a3;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+}
+
+html,
+body {
+  background-color: var(--bg-main);
+  color: var(--color);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+img {
+  width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.container {
+  max-width: 1280px;
+  padding: 0 30px;
+  margin: 0 auto;
+
+  @media (max-width: 600px) {
+    padding: 0 10px;
+  }
+}
+
+.btn {
+  border-radius: 20px;
+  width: 37px;
+  height: 37px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 200ms ease-in;
+  background-color: var(--btn-bg);
+
+  &:hover {
+    background-color: var(--btn-bg-hover);
+    border-radius: 5px;
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+
+  &-default {
+    width: 35px;
+    height: 35px;
+    position: relative;
+    left: 5px;
+  }
+
+  &-user {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+
+    svg {
+      margin-right: 5px;
+    }
+  }
+
+  &-editor {
+    background-color: var(--btn-bg-add);
+    position: relative;
+    margin-right: 20px;
+
+    &:after {
+      content: '';
+      height: 100%;
+      width: 1px;
+      background-color: #d3d3d3;
+      position: absolute;
+      right: -20px;
+    }
+
+    &:hover {
+      border-radius: 20px;
+      background-color: var(--btn-bg-add-hover);
+    }
+
+    span {
+      color: var(--bg);
+    }
+
+    svg {
+      fill: var(--bg)
+    }
+
+    svg path {
+      stroke: var(--bg);
+    }
+  }
+}
