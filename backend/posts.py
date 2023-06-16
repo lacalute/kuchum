@@ -31,7 +31,7 @@ def update_post(post_id):
 async def all_post():
   return crud_posts.get_all()
 
-@app.get('/post/{id}', tags=['posts'])
+@app.get('/post/{post_id}', tags=['posts'])
 async def post_id(post_id):
   try:
     return crud_posts.get_id(post_id)

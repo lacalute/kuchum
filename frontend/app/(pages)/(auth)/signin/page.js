@@ -1,5 +1,8 @@
 export default function SignIn() {
   return (
-      <p>signin</p>
+    <form className="form">
+      <input className="input" placeholder="Nick"></input>
+      <input className="input" placeholder="Password"></input>
+    </form>
   )
 }

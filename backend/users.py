@@ -11,10 +11,12 @@ async def all_users():
   return crud_users.get_all()
     
 
-@app.get('/user/{id}', tags=['users'])
-async def user_id(id):
+@app.get('/user/@{nick}', tags=['users'])
+async def user_nick(nick):
   try:
-    return crud_users.get_id(id)
+    result = usrs.find_one({'nick': nick})
+    result["_id"] = str(result["_id"])
+    return result
   except:
     return "User not found"
   
