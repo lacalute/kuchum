@@ -3,12 +3,7 @@
 import { useState } from 'react'
 import './authForm.scss'
 
-export const AuthForm = ({ submitHandler, error, loading, title = 'Вход' }) => {
-  const [values, setValues] = useState({
-    email: '',
-    password: '',
-  })
-
+export const AuthForm = ({ submitHandler, error, loading, title = 'Вход', values, setValues }) => {
   return (
     <div className="auth">
       <form onSubmit={submitHandler} className="auth__form">
