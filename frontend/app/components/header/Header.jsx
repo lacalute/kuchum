@@ -7,10 +7,10 @@ import {FiUser} from 'react-icons/fi'
 export const Header = () => {
   return <header className='header'>
     <div className="header__container">
-      <Link href='/' className="logo">type blog</Link>
+      <Link href='/' className="logo">Kuchum blog</Link>
       <div className="header__controls">
         <Link className='btn btn-editor' href="/editor">
-          <GrFormAdd size={30}/>
+          <GrFormAdd size={20}/>
         </Link>
 
         <Link className='btn btn-default' href="/favorites">

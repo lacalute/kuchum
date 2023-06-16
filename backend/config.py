@@ -17,9 +17,10 @@ from pydantic import BaseModel
 from connection import *
 from fastapi.middleware.cors import CORSMiddleware
 from hashing import *
-from datetime import datetime
 from bson.objectid import ObjectId
 from typing import Optional
+import base64
+import json
 
 # init the main FastAPI class
 app = FastAPI()
@@ -73,9 +74,11 @@ class CRUD:
     
   def get_id(self, id):
     try: 
-      return self.collection.find_one({'_id': ObjectId(id)})
+      result_id = self.collection.find_one({'_id': ObjectId(id)})
+      result_id['_id'] = str(result_id['_id'])
+      return result_id
     except: 
-      return None
+      return {'msg': 'Not found'}
   
 
 

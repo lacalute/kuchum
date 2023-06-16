@@ -7,14 +7,13 @@ crud_posts = CRUD(posts)
 
 @app.post('/create_post', tags=['posts'])
 def create_post(post: Post, req: Request, Authorize: AuthJWT = Depends()):
-  if token.isAccessToken(req, Authorize) and token.isRefreshToken(req, Authorize):
-    user_payload = token.decodeToken(token.get_access_token(req))
-    print(user_payload)
-    try:
-      crud_posts.create(post_payload(user_payload, post.title, post.content))
-      return {'msg': 'Post was published'}
-    except:
-      return 'Something went wrong'
+  token.tokens_required(req, 2, Authorize)
+  author_payload = token.decode_token(token.tokens_required()[0])
+  try:
+    crud_posts.create(post_payload(author_payload, post.title, post.content))
+    return {'msg': 'Post was published'}
+  except:
+    return 'Something went wrong'
   
 @app.post('/delete_post', tags=['posts'])
 def delete_post(post_id):

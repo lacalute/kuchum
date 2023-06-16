@@ -1,11 +1,12 @@
 "use client"
-
 import {Search} from "@/app/components/UI/search/Search";
 import {useEffect, useState} from "react";
 import './feed.scss'
 import {Post} from "@/app/components/post/Post";
 import {useFetching} from "@/app/hooks/useFetching";
 import {PostService} from "@/app/service/posts.service";
+
+
 export default function MyFeed() {
   const [inputValue, setInputValue] = useState('')
   const {data: feedPosts, error, isLoading, fetching: fetchPosts} =  useFetching()
@@ -29,3 +30,4 @@ export default function MyFeed() {
       </section>
   )
 }
+
