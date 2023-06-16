@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
 import { useState } from 'react'
 
 export const useFetching = () => {
@@ -6,7 +6,7 @@ export const useFetching = () => {
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
-  const fetching = async (callback) => {
+  const fetching = async callback => {
     setIsLoading(true)
     try {
       const response = await callback()

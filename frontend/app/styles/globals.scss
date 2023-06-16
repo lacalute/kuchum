@@ -1,13 +1,19 @@
 :root {
   --color: rgba(35, 35, 35, 0.87);
   --bg: #fff;
-  --bg-main: #F7F5FE;
+  --bg-main: #f7f5fe;
 
   --btn-bg: #ffffff;
   --btn-bg-hover: #f5dddd;
 
   --btn-bg-add: #e1a3a3;
   --btn-bg-add-hover: #e1a3a3;
+
+  --bg-input: #f8f7f7;
+  --bg-chat: #f1f1f1;
+  --bg-input-hover: #f0f0f0;
+  --bg-accent: #00a884;
+  --bg-accent-hover: #029a79;
 }
 
 * {
@@ -125,7 +131,7 @@ button {
     }
 
     svg {
-      fill: var(--bg)
+      fill: var(--bg);
     }
 
     svg path {
